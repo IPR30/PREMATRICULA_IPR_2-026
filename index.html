@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="es">
+<head>
+ <meta charset="utf-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <title>Sistema de Matrícula Escolar</title>
+ <style>
+ :root {
+ --fondo: #e7f3ff;
+ --panel: #ffffff;
+ --borde: #011aff;
+ --titulo: #0078d7;
+ --boton: #4ba3ff;
+ --boton-hover: #005bb5;
+ --texto: #0d1b2a;
+ --sombra: rgb(0, 4, 255);
+ font-family: 'Segoe UI', sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+ body {
+ margin: 0;
+ background: var(--fondo);
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ min-height: 100vh;
+ }
+
+ .card {
+ background: var(--panel);
+ border: 2px solid var(--borde);
+ border-radius: 8px;
+ box-shadow: 0 4px 20px var(--sombra);
+ width: 100%;
+ max-width: 650px;
+ padding: 30px 40px;
+ color: var(--texto);
+ }
+
+ h1 {
+ text-align: center;
+ font-size: 1.8rem;
+ color: var(--titulo);
+ font-family: "Comic Sans MS", "Segoe Print", cursive;
+ margin-top: 0; 
+ margin-bottom: 20px;
+ text-shadow: 1px 1px 2px #bcdfff;
+ }
+
+
+ label {
+ display: block;
+ font-weight: 600;
+ margin-bottom: 6px;
+ font-size: 14px;
+ }
+
+ input, select {
+ width: 100%;
+ padding: 10px 12px;
+ border-radius: 6px;
+ border: 1px solid var(--borde);
+ background: #f8fbff;
+ color: var(--texto);
+ font-size: 14px;
+  margin-bottom: 12px;
+   transition: 0.3s;
+}
+
+ input:focus, select:focus {
+   border-color: var(--titulo);
+ box-shadow: 0 0 4px var(--titulo);
+ background: #fff;
+ outline: none;
+ }
+
+ p {
+ margin: 6px 0;
+ font-size: 14px;
+ }
+
+ .btn {
+ background: var(--boton);
+ color: white;
+ border: none;
+ padding: 10px 18px;
+  border-radius: 6px;
+ cursor: pointer;
+ font-weight: 600;
+ font-size: 14px;
+ transition: background 0.3s, transform 0.2s;
+ margin-top: 6px;
+ box-shadow: 0 2px 5px var(--sombra);
+ }
+
+ .btn:hover {
+ background: var(--boton-hover);
+ transform: scale(1.02);
+ }
+
+ .message {
+ display: none;
+ background: #d7f9e7;
+ color: #047857;
+ padding: 10px;
+ border-radius: 6px;
+ text-align: center;
+ border: 1px solid #10b981;
+  font-weight: 600;
+ margin-top: 10px;
+ }
+
+ select option {
+ background-color: #f0f7ff;
+  color: var(--texto);
+ }
+
+ @media print {
+ .btn, .message { display: none !important; }
+  body { background: white; color: black; }
+   .card {
+ box-shadow: none;
+ border: 1px solid #000;
+ background: white;
+ color: black;
+ }
+ input, select { border: none; background: none; color: black; }
+ #numMatricula { font-weight: bold; color: black; }
+ 
+ /* Estilo para mostrar la fecha de registro solo en la impresión */
+ #registroFechaHora { display: block !important; }
+ }
+ </style>
+</head>
+<body>
+ <div class="card">
+ <h1>Sistema de Matrícula Escolar</h1>
+
+ <form id="matriculaForm">
+ <p style="text-align:right; font-weight:bold; color:var(--titulo);">
+   N° Matrícula: <span id="numMatricula">—</span>
+</p>
+
+<p id="registroFechaHora" style="text-align:right; font-size: 12px; margin-top: -10px; margin-bottom: 20px; display: none;"> Registrado el: <span id="fechaHoraDisplay"></span>
+</p>
+ <label for="nombre">Nombre Completo</label>
+ <input id="nombre" name="nombre" type="text" placeholder="Ej. Juan Pérez" required />
+
+<label for="dni">Número de Identidad</label>
+ <input id="dni" name="dni" type="text" placeholder="0000-0000-00000" required />
+
+<label for="fechaNac">Fecha de Nacimiento</label>
+ <input id="fechaNac" name="fechaNac" type="date" required />
+
+ <label for="grado">Grado a Matricular</label>
+      <select id="grado" name="grado" required>
+        <option value="">Seleccione un grado</option>
+        <option>Septimo</option>
+        <option>Octavo</option>
+        <option>Noveno</option>
+      </select>
+
+      <label for="seccion">Sección</label>
+      <select id="seccion" name="seccion" required>
+        <option value="">Seleccione una sección</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+      </select>
+
+      <p><strong>Cupos restantes:</strong> <span id="cupos">—</span></p>
+
+            <label for="retrasada">¿Lleva clase retrasada?</label>
+ <select id="retrasada" name="retrasada" required>
+   <option value="">Seleccione una opción</option>
+   <option value="Sí">Sí</option>
+   <option value="No">No</option>
+ </select>
+
+ <label for="repite">¿Repite el año?</label>
+ <select id="repite" name="repite" required>
+   <option value="">Seleccione una opción</option>
+   <option value="Sí">Sí</option>
+   <option value="No">No</option>
+ </select> <label for="encargado">Nombre del Encargado</label>
+      <input id="encargado" name="encargado" type="text" placeholder="Ej. María López" required />
+
+      <label for="telefono">Teléfono</label>
+      <input id="telefono" name="telefono" type="tel" placeholder="9999-9999" required />
+
+      <label for="correo">Correo Electrónico</label>
+      <input id="correo" name="correo" type="email" placeholder="correo@ejemplo.com" />
+
+      <input type="hidden" id="codigoMatricula" name="codigoMatricula" />
+
+      <button type="submit" class="btn" id="btnRegistrar">Registrar Matrícula</button>
+      <button type="button" id="imprimir" class="btn" disabled>Imprimir Formulario</button>
+    </form>
+
+    <div id="mensaje" class="message"></div>
+  </div>
+<script>
+    const form = document.getElementById('matriculaForm');
+    const msg = document.getElementById('mensaje');
+    const cuposDisplay = document.getElementById('cupos');
+    const seccionSelect = document.getElementById('seccion');
+    const gradoSelect = document.getElementById('grado');
+    const btnImprimir = document.getElementById('imprimir');
+    const btnRegistrar = document.getElementById('btnRegistrar');
+    const numMatricula = document.getElementById('numMatricula');
+    
+    // NUEVA CONSTANTE
+    const fechaHoraDisplay = document.getElementById('fechaHoraDisplay');
+
+    // Cupos por grado y sección
+    const maxCupos = {
+        'Septimo': { '1': 20, '2': 20, '3': 20 },
+        'Octavo':  { '1': 20, '2': 20, '3': 20 },
+        'Noveno':  { '1': 20, '2': 20, '3': 20 }
+    };
+    let cuposRestantes = JSON.parse(JSON.stringify(maxCupos));
+
+    // Lista de DNI ya registrados (en memoria)
+    let dniRegistrados = [];
+
+    const actualizarCupos = () => {
+        const grado = gradoSelect.value;
+        const seccion = seccionSelect.value;
+        if (grado && seccion) {
+            cuposDisplay.textContent = cuposRestantes[grado][seccion];
+        } else {
+            cuposDisplay.textContent = '—';
+        }
+    };
+    seccionSelect.addEventListener('change', actualizarCupos);
+    gradoSelect.addEventListener('change', actualizarCupos);
+
+    const generarCodigo = () => {
+        const fecha = new Date();
+        return 'MAT' + fecha.getFullYear().toString().slice(2) +
+               (fecha.getMonth() + 1).toString().padStart(2, '0') +
+               fecha.getDate().toString().padStart(2, '0') +
+               Math.floor(Math.random() * 900 + 100);
+    };
+
+    const calcularEdad = (fechaNac) => {
+        const hoy = new Date();
+        const nacimiento = new Date(fechaNac);
+        let edad = hoy.getFullYear() - nacimiento.getFullYear();
+        const mes = hoy.getMonth() - nacimiento.getMonth();
+        if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) edad--;
+        return edad;
+    };
+
+    const resetForm = () => {
+        form.reset();
+        numMatricula.textContent = '—';
+        actualizarCupos();
+        btnRegistrar.disabled = false;
+        btnImprimir.disabled = true;
+        
+        // LÍNEA MODIFICADA/AGREGADA: Oculta la fecha al resetear
+        document.getElementById('registroFechaHora').style.display = 'none';
+        fechaHoraDisplay.textContent = '';
+    };
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const datos = Object.fromEntries(new FormData(form));
+
+        if (!datos.nombre || !datos.dni || !datos.grado || !datos.seccion || !datos.encargado) {
+            alert('Por favor, complete todos los campos requeridos.');
+            return;
+        }
+
+        if (dniRegistrados.includes(datos.dni)) {
+            alert('Ya existe una matrícula registrada con este número de identidad.');
+            return;
+        }
+
+        const edad = calcularEdad(datos.fechaNac);
+        if (datos.grado === 'Septimo' && datos.seccion === '1' && edad > 13) {
+            alert('Los alumnos mayores de 13 años no pueden inscribirse en la Sección 1 de Séptimo.');
+            return;
+        }
+        if (datos.grado === 'Octavo' && datos.seccion === '1' && edad > 14) {
+            alert('Los alumnos mayores de 14 años no pueden inscribirse en la Sección 1 de Octavo.');
+            return;
+        }
+        if (datos.grado === 'Noveno' && datos.seccion === '1' && edad > 15) {
+            alert('Los alumnos mayores de 15 años no pueden inscribirse en la Sección 1 de Noveno.');
+            return;
+        }
+
+        if (cuposRestantes[datos.grado][datos.seccion] <= 0) {
+            alert('No hay cupos disponibles en la sección seleccionada.');
+            return;
+        }
+
+        const codigoMatricula = generarCodigo();
+        document.getElementById('codigoMatricula').value = codigoMatricula;
+        numMatricula.textContent = codigoMatricula;
+
+        // Guardar en la base de datos (se asume que existe 'guardar_matricula.php')
+        const formData = new FormData(form);
+        fetch("guardar_matricula.php", {
+            method: "POST",
+            body: formData
+        })
+        .then(res => res.text())
+        .then(data => {
+            // Lógica de respuesta del servidor simulada
+            if (data.trim() === "DUPLICADO") {
+                alert("⚠ Ya existe una matrícula con este número de identidad.");
+                return;
+            }
+            if (data.trim() === "OK") {
+                dniRegistrados.push(datos.dni);
+                cuposRestantes[datos.grado][datos.seccion]--;
+                actualizarCupos();
+                
+                // LÍNEAS AGREGADAS: Captura y muestra la fecha y hora de registro
+                const now = new Date();
+                const formattedDate = now.toLocaleDateString('es-ES') + ' ' + now.toLocaleTimeString('es-ES');
+                fechaHoraDisplay.textContent = formattedDate;
+                // La visibilidad en pantalla se controla con CSS @media print
+                // FIN LÍNEAS AGREGADAS
+
+                msg.textContent = "¡Matrícula registrada exitosamente! Código: " + codigoMatricula; // Corregido el template literal
+                msg.style.display = "block";
+                setTimeout(() => msg.style.display = "none", 5000);
+
+                btnImprimir.disabled = false;
+                btnRegistrar.disabled = true;
+            } else {
+                // Si hay un error del servidor (no es "OK" ni "DUPLICADO")
+                alert("Error en el servidor: " + data);
+            }
+        })
+        .catch(err => alert("Error de conexión con el servidor: " + err));
+    });
+
+    btnImprimir.addEventListener('click', () => {
+        if (numMatricula.textContent === '—') {
+            alert('Primero registre una matrícula antes de imprimir.');
+            return;
+        }
+        window.print();
+        resetForm();
+    });
+
+    // Inicializar la visualización de cupos
+    actualizarCupos();
+</script>
+</body>
+</html>
